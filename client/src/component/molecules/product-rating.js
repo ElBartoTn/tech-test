@@ -3,7 +3,6 @@ import { FullStar, EmptyStar } from "../atoms/rating-star";
 
 class ProductRating extends React.Component {
   getFullStarsCount() {
-    //Update this function with your custom rating , for this example i'm assuming that > 97 is a five stars rating
     const rating = this.props.rating;
     const baseRate = this.props.baseRate;
     const starsCount = this.props.starsCount;
