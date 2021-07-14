@@ -111,6 +111,7 @@ class Parfums extends React.Component {
         sortedProducts = products.sort((a, b) => b.name.localeCompare(a.name));
         break;
       default:
+        sortedProducts = products.sort((a, b) => b.rating - a.rating);
         break;
     }
     this.setState({ products: sortedProducts });
