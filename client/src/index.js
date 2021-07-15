@@ -7,21 +7,21 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 
 export const client = new ApolloClient({
-    uri: "http://localhost:4000/graphql",
-    request: operation => {
-        operation.setContext({
-            headers: {
-                authorization: `Bearer your-personal-access-token`
-            },
-        });
-    }
+  uri: "http://localhost:4000/graphql",
+  request: (operation) => {
+    operation.setContext({
+      headers: {
+        authorization: `Bearer your-personal-access-token`,
+      },
+    });
+  },
 });
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
   </ApolloProvider>,
   document.getElementById("root")
 );

@@ -5,11 +5,12 @@ import MultiFilter from "../molecules/multi-filter";
 import ProductFilter from "../organisms/product-filter";
 import ResetFilters from "../organisms/reset-filters";
 
-class ProductFilters extends React.Component{
+class ProductFilters extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       filters: [],
+      openedDropdown: null,
     };
   }
   /*
@@ -115,12 +116,18 @@ class ProductFilters extends React.Component{
             onFilter={(event) => this.onFilter(event, "product-type")}
             selectedFilters={this.state.filters}
             submit={() => this.props.filterAction(this.state.filters)}
+            isOpen={this.state.openedDropdown === 1}
+            onClick={() => this.setState({ openedDropdown: 1 })}
+            onClose={() => this.setState({ openedDropdown: null })}
           ></ProductFilter>
           <ProductFilter
             filterBy="product-brand"
             onFilter={(event) => this.onFilter(event, "product-brand")}
             selectedFilters={this.state.filters}
             submit={() => this.props.filterAction(this.state.filters)}
+            isOpen={this.state.openedDropdown === 2}
+            onClick={() => this.setState({ openedDropdown: 2 })}
+            onClose={() => this.setState({ openedDropdown: null })}
           ></ProductFilter>
         </Grid>
         {!this.shouldHideResetFilter() && (

@@ -24,7 +24,8 @@ class Dropdown extends React.Component {
     if (selectedFilters) return selectedFilters.includes(item);
   }
   toggleDropdown() {
-    this.setState({ isOpen: !this.state.isOpen });
+    this.props.onClick();
+    this.setState({ isOpen: !this.props.isOpen });
   }
   submit() {
     this.props.submit();
@@ -35,13 +36,13 @@ class Dropdown extends React.Component {
       <DropDownContainer>
         <DropDownHeader onClick={() => this.toggleDropdown()}>
           {this.props.header}
-          {!this.state.isOpen ? (
+          {!this.state.isOpen || !this.props.isOpen ? (
             <DropDownIconDown></DropDownIconDown>
           ) : (
             <DropDownIconUp></DropDownIconUp>
           )}
         </DropDownHeader>
-        {this.state.isOpen && (
+        {this.state.isOpen && this.props.isOpen && (
           <DropDownListContainer>
             <DropDownList>
               {Object.keys(items).map((item) => (

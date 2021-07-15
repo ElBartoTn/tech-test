@@ -5,8 +5,6 @@ import ProductSorting from "../molecules/product-sort";
 import { gql } from "apollo-boost";
 import { client } from "../../index";
 
-
-
 class Parfums extends React.Component {
   constructor(props) {
     super(props);
@@ -16,63 +14,69 @@ class Parfums extends React.Component {
   componentDidMount() {
     this.fetchData();
   }
-  fetchData(){
-   return client
-    .query({
-      query: gql`
-        query GetProducts {
+  fetchData() {
+    return client
+      .query({
+        query: gql`
+          query GetProducts {
             products {
-                id
-                name
-                slug
-                brand
-                type
-                image
-                price
-                size
-                rating
+              id
+              name
+              slug
+              brand
+              type
+              image
+              price
+              size
+              rating
+            }
           }
-        }
-      `,
-    })
-    .then(result => this.setState({ products: result.data.products }));
-}
-   filterProducts(selectedFilters) {
+        `,
+      })
+      .then((result) => this.setState({ products: result.data.products }));
+  }
+  filterProducts(selectedFilters) {
     if (selectedFilters) {
-     this.fetchData().then(() => {
+      this.fetchData().then(() => {
         let filterResult;
         let selectedTypeFilters;
         let selectedBrandFilters;
         let typeFilterCount;
         let brandFilterCount;
-  
-        if (selectedFilters.some((f) => f.filterBy === "product-type")) {//Count selected filter by product type
+
+        if (selectedFilters.some((f) => f.filterBy === "product-type")) {
+          //Count selected filter by product type
           selectedTypeFilters = selectedFilters.filter(
             (f) => f.filterBy === "product-type"
           )[0].searchText;
           typeFilterCount = selectedTypeFilters.length;
         }
-        if (selectedFilters.some((f) => f.filterBy === "product-brand")) {//Count selected filter by product brand
+        if (selectedFilters.some((f) => f.filterBy === "product-brand")) {
+          //Count selected filter by product brand
           selectedBrandFilters = selectedFilters.filter(
             (f) => f.filterBy === "product-brand"
           )[0].searchText;
           brandFilterCount = selectedBrandFilters.length;
         }
-  
+
         if (!selectedTypeFilters) typeFilterCount = 0;
         if (!selectedBrandFilters) brandFilterCount = 0;
-  
-        if (typeFilterCount === 0 && brandFilterCount === 0)//if no filter keep the current products
+
+        if (typeFilterCount === 0 && brandFilterCount === 0)
+          //if no filter keep the current products
           filterResult = this.state.products;
-        if (typeFilterCount > 0 && brandFilterCount === 0)//filter by type only
+        if (typeFilterCount > 0 && brandFilterCount === 0)
+          //filter by type only
           filterResult = this.state.products.filter(
             (p) => selectedTypeFilters.indexOf(p.type) > -1
           );
-        if (typeFilterCount === 0 && brandFilterCount > 0)//filter by brand only
+        if (typeFilterCount === 0 && brandFilterCount > 0)
+          //filter by brand only
           filterResult = this.state.products.filter(
             (p) => selectedBrandFilters.indexOf(p.brand) > -1
           );
-        if (typeFilterCount > 0 && brandFilterCount > 0) {//filter by brand and type
+        if (typeFilterCount > 0 && brandFilterCount > 0) {
+          //filter by brand and type
           let productsBytype = this.state.products.filter(
             (p) => selectedTypeFilters.indexOf(p.type) > -1
           );
@@ -83,8 +87,7 @@ class Parfums extends React.Component {
         if (filterResult) {
           this.setState({ products: filterResult });
         }
-     });
-     
+      });
     }
   }
   sortProducts(sortBy) {
@@ -127,10 +130,9 @@ class Parfums extends React.Component {
         <ProductSorting
           onSort={(sortBy) => this.sortProducts(sortBy)}
         ></ProductSorting>
-       <Products products={this.state.products}></Products>
+        <Products products={this.state.products}></Products>
       </div>
     );
   }
 }
 export default Parfums;
-

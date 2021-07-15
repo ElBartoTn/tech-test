@@ -6,7 +6,7 @@ import ProductCard from "../organisms/product-card";
 class Products extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { products: []};
+    this.state = { products: [] };
   }
 
   render() {
